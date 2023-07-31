@@ -151,10 +151,9 @@ variable "allowed_access_groups" {
 }
 
 variable "vpc_id" {
-  type        = string
   description = "VPC Id to create resources"
-  default = "vpc-0187cb0888a188fe1"
 }
+
 variable "dns_servers" {
   type        = list(string)
   default     = []
