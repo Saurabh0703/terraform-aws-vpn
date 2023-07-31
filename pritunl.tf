@@ -14,7 +14,6 @@ data "aws_ami" "ubuntu" {
 
   owners = ["099720109477"]
 }
-
 data "template_file" "user_data" {
   template = file("${path.module}/userdata.sh")
 }
@@ -24,7 +23,7 @@ resource "aws_instance" "ec2" {
   ami                     = data.aws_ami.ubuntu.id
   instance_type           = var.instance_type
   subnet_id               = var.subnet_id
-  vpc_security_group_ids  = [var.security_group_id == "" ? aws_security_group.default[0].id : var.security_group_id]
+  vpc_security_group_ids = [var.security_group_id == "" ? aws_security_group.default[0].id : var.security_group_id]
   key_name                = var.key_name
   ebs_optimized           = var.ebs_optimized
   disable_api_termination = var.disable_api_termination
@@ -32,8 +31,16 @@ resource "aws_instance" "ec2" {
   user_data_base64        = base64encode(data.template_file.user_data.rendered)
   source_dest_check       = var.source_dest_check
   volume_tags             = merge(var.common_tags, tomap({ "Name" : "${var.project_name_prefix}-vpn" }))
-  tags                    = merge(var.common_tags, tomap({ "Name" : "${var.project_name_prefix}-vpn" }))
-
+  tags = merge(
+    var.common_tags,
+    tomap({
+      "Name"        = var.tag_name,
+      "Environment" = var.tag_environment,
+      "Project"     = var.tag_project,
+      "Owner"       = var.tag_owner,
+    })
+  )
+  
   root_block_device {
     delete_on_termination = var.delete_on_termination
     encrypted             = var.encrypted
@@ -58,7 +65,7 @@ resource "aws_instance" "ec2" {
 
 resource "aws_eip" "pritunl-eip" {
   count                   = !var.create_aws_vpn && var.create_aws_ec2_pritunl ? 1 : 0
-  vpc                       = true
+  domain                    = "vpc"
   instance                  = aws_instance.ec2[count.index].id
   associate_with_private_ip = aws_instance.ec2[count.index].private_ip
   tags                      = merge(var.common_tags, tomap({ "Name" : "${var.project_name_prefix}-vpn" }))
