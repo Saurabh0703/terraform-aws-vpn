@@ -1,17 +1,19 @@
 variable "subnet_id" {
   description = "The VPC Subnet IDs to launch in"
   type        = string
+  default = "subnet-0b199b711cd8198cf"
 }
 
 variable "security_groups" {
   description = "A string value for Security Group ID"
   type        = list(string)
-  default     = []
+  default     = ["sg-0f798a1ec37018aae"]
 }
 
 variable "key_name" {
   description = "Key name of the Key Pair to use for the instance; which can be managed using the `aws_key_pair` resource"
   type        = string
+  default = "learn"
 }
 
 variable "project_name_prefix" {
@@ -34,6 +36,30 @@ variable "ebs_optimized" {
 variable "common_tags" {
   description = "A mapping of tags to assign to the resource"
   type        = map(string)
+  default = {
+    "Scheduler" = "true"
+  }
+}
+variable "tag_name" {
+  description = "Name tag value for the instance"
+  type        = string
+  default     = "VPN"
+}
+
+variable "tag_environment" {
+  description = "Environment tag value for the instance"
+  type        = string
+  default     = "uat"
+}
+variable "tag_project" {
+  description = "Name tag value for the instance"
+  type        = string
+  default     = "vr-core"
+}
+variable "tag_owner" {
+  description = "Name tag value for the instance"
+  type        = string
+  default     = "tothenew.com"
 }
 
 variable "delete_on_termination" {
@@ -57,7 +83,7 @@ variable "volume_type" {
 variable "root_volume_size" {
   description = "Root volume size of the EC2 instance"
   type        = number
-  default     = 100
+  default     = 40
 }
 
 variable "disable_api_stop" {
@@ -75,7 +101,7 @@ variable "source_dest_check" {
 variable "instance_type" {
   description = "The type of instance to start"
   type        = string
-  default     = "t3a.medium"
+  default     = "t3.medium"
 }
 
 
@@ -93,20 +119,29 @@ variable "create_aws_ec2_pritunl" {
 
 variable "cidr" {
   description = "Network CIDR to use for clients"
-  default     = ""
+  default     = "0.0.0.0/0"
   type        = string
 }
 
 variable "subnet_ids" {
   type        = list(string)
   description = "Subnet ID to associate clients (each subnet passed will create an VPN association - costs involved)"
-  default     = []
+  default     = ["subnet-07a358856088d5214","subnet-0b199b711cd8198cf"]
 }
 
 variable "allowed_cidr_ranges" {
+# cat <<<'{
+#     "debug": false,
+#     "bind_addr": "0.0.0.0",
+#     "port": 443,
+#     "log_path": "/var/log/pritunl.log",
+#     "temp_path": "/tmp/pritunl_%r",
+#     "local_address_interface": "auto",
+#     "mongodb_uri": "mongodb://localhost:27017/pritunl"
+# }' > /etc/pritunl.conf
   type        = list(string)
   description = "List of CIDR ranges from which access is allowed"
-  default     = []
+  default     = ["0.0.0.0/0"]
 }
 
 variable "allowed_access_groups" {
@@ -118,6 +153,7 @@ variable "allowed_access_groups" {
 variable "vpc_id" {
   type        = string
   description = "VPC Id to create resources"
+  default = "vpc-0187cb0888a188fe1"
 }
 variable "dns_servers" {
   type        = list(string)
@@ -163,7 +199,7 @@ variable "split_tunnel" {
 
 variable "security_group_id" {
   type        = string
-  default     = ""
+  default     = "sg-0f798a1ec37018aae"
   description = "Optional security group id to use instead of the default created"
 }
 
@@ -175,7 +211,7 @@ variable "enable_self_service_portal" {
 
 variable "vpn_port" {
   type        = number
-  default     = null
+  default     = "15000"
   description = " (Optional) The port number for the Client VPN endpoint. Valid values are 443 and 1194. Default value is 443.  In case of pritunl it can be any UDP port value set from pritunl console"
 }
 
