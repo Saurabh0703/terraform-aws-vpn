@@ -195,10 +195,9 @@ variable "split_tunnel" {
   description = "With split_tunnel false, all client traffic will go through the VPN."
 }
 
-#variable "security_group_id" {
- # type        = string
- # description = "Optional security group id to use instead of the default created"
-#}
+variable "security_group_id" {
+    description = "Optional security group id to use instead of the default created"
+}
 
 variable "enable_self_service_portal" {
   type        = bool
