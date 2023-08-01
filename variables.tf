@@ -6,7 +6,7 @@ variable "subnet_id" {
 variable "security_groups" {
   description = "A string value for Security Group ID"
   type        = list(string)
-  default     = ["sg-0759d53bbbebae396"]
+  default     = ["sg-01a6c1163c1c6a7bf"]
 }
 
 variable "key_name" {
@@ -198,7 +198,7 @@ variable "split_tunnel" {
 
 variable "security_group_id" {
   type        = string
-  default     = "sg-0759d53bbbebae396"
+  default     = "sg-01a6c1163c1c6a7bf"
   description = "Optional security group id to use instead of the default created"
 }
 
