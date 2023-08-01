@@ -150,9 +150,6 @@ variable "allowed_access_groups" {
   default     = []
 }
 
-variable "vpc_id" {
-  description = "VPC Id to create resources"
-}
 
 variable "dns_servers" {
   type        = list(string)
