@@ -30,7 +30,13 @@ resource "aws_security_group" "vpn_sg" {
     protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
   }
-  egress
+  egress {
+    description = "Allow all traffic into the server"
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
 resource "aws_instance" "ec2" {
   count                   = !var.create_aws_vpn && var.create_aws_ec2_pritunl ? 1 : 0
