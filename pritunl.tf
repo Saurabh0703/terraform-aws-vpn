@@ -22,7 +22,6 @@ resource "aws_instance" "ec2" {
   count                   = !var.create_aws_vpn && var.create_aws_ec2_pritunl ? 1 : 0
   ami                     = data.aws_ami.ubuntu.id
   instance_type           = var.instance_type
-  vpc_id                  = var.vpc_id
   subnet_id               = var.subnet_id
   vpc_security_group_ids = [var.security_group_id == "" ? aws_security_group.default[0].id : var.security_group_id]
   key_name                = var.key_name
