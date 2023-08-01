@@ -45,6 +45,10 @@ variable "tag_name" {
   type        = string
   default     = "VPN"
 }
+variable "vpc_id" {
+  type        = string
+  description = "VPC Id to create resources"
+}
 
 variable "tag_environment" {
   description = "Environment tag value for the instance"
