@@ -20,7 +20,7 @@ data "template_file" "user_data" {
 
 resource "aws_instance" "ec2" {
   count                   = !var.create_aws_vpn && var.create_aws_ec2_pritunl ? 1 : 0
-  security_group_id       = aws_security_group.default.id
+  vpc_security_group_ids = [aws_security_group.default.id]
   ami                     = data.aws_ami.ubuntu.id
   instance_type           = var.instance_type
   subnet_id               = var.subnet_id
