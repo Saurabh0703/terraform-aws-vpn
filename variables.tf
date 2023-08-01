@@ -3,10 +3,10 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "security_groups" {
-  description = "A string value for Security Group ID"
-  type        = list(string)
-}
+#variable "security_groups" {
+ # description = "A string value for Security Group ID"
+ # type        = list(string)
+#}
 
 variable "key_name" {
   description = "Key name of the Key Pair to use for the instance; which can be managed using the `aws_key_pair` resource"
@@ -195,10 +195,10 @@ variable "split_tunnel" {
   description = "With split_tunnel false, all client traffic will go through the VPN."
 }
 
-variable "security_group_id" {
-  type        = string
-  description = "Optional security group id to use instead of the default created"
-}
+#variable "security_group_id" {
+ # type        = string
+ # description = "Optional security group id to use instead of the default created"
+#}
 
 variable "enable_self_service_portal" {
   type        = bool
