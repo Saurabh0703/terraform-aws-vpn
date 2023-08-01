@@ -1,13 +1,12 @@
 variable "subnet_id" {
   description = "The VPC Subnet IDs to launch in"
   type        = string
-  default = "subnet-0b199b711cd8198cf"
 }
 
 variable "security_groups" {
   description = "A string value for Security Group ID"
   type        = list(string)
-  default     = ["sg-0f798a1ec37018aae"]
+  default     = ["sg-0759d53bbbebae396"]
 }
 
 variable "key_name" {
@@ -130,7 +129,7 @@ variable "cidr" {
 variable "subnet_ids" {
   type        = list(string)
   description = "Subnet ID to associate clients (each subnet passed will create an VPN association - costs involved)"
-  default     = ["subnet-07a358856088d5214","subnet-0b199b711cd8198cf"]
+  
 }
 
 variable "allowed_cidr_ranges" {
@@ -199,7 +198,7 @@ variable "split_tunnel" {
 
 variable "security_group_id" {
   type        = string
-  default     = "sg-0f798a1ec37018aae"
+  default     = "sg-0759d53bbbebae396"
   description = "Optional security group id to use instead of the default created"
 }
 
