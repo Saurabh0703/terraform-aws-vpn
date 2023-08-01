@@ -17,6 +17,20 @@ data "aws_ami" "ubuntu" {
 data "template_file" "user_data" {
   template = file("${path.module}/userdata.sh")
 }
+resource "aws_security_group" "vpn_sg" {
+  name        = "${var.project_name_prefix}-vpn-sg"
+  vpc_id      = var.vpc_id
+  tags        = merge(var.common_tags, tomap({ "Name" : "${var.project_name_prefix}-vpn-sg" }))
+  description = "VPN security group"
+  
+  ingress {
+    description = "Allow all traffic into the server"
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress
 
 resource "aws_instance" "ec2" {
   count                   = !var.create_aws_vpn && var.create_aws_ec2_pritunl ? 1 : 0
