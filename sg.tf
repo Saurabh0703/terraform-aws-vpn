@@ -1,5 +1,5 @@
 resource "aws_security_group" "default" {
-  count       = var.security_group_id == "" ? 1 : 0
+  #count       = var.security_group_id == "" ? 1 : 0
   name_prefix = "${var.project_name_prefix}-Client-VPN"
   description = "security group allowing egress for client-vpn users"
   vpc_id      = var.vpc_id
